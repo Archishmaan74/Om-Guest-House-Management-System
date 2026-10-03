@@ -2,6 +2,7 @@ package com.omguesthouse.backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,7 +39,6 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
 
-
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
@@ -50,6 +50,17 @@ public class SecurityConfig {
                                 "/auth/**",
                                 "/health"
                         ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/users/me"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/users/*"
+                        ).hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
 
