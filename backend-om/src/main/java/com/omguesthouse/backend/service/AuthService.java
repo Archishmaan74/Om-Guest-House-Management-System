@@ -7,6 +7,7 @@ import com.omguesthouse.backend.entity.Role;
 import com.omguesthouse.backend.entity.User;
 import com.omguesthouse.backend.repository.UserRepository;
 import com.omguesthouse.backend.security.JwtService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,9 @@ public class AuthService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${admin.setup-secret}")
+    private String adminSetupSecret;
 
     public AuthService(
             AuthenticationManager authenticationManager,
@@ -47,6 +51,29 @@ public class AuthService {
         );
 
         userRepository.save(user);
+    }
+
+    public void setupAdmin(
+            RegisterRequest request,
+            String setupSecret
+    ) {
+
+        if (!adminSetupSecret.equals(setupSecret)) {
+            throw new RuntimeException("Invalid setup secret");
+        }
+
+        if (userRepository.existsByRole(Role.ADMIN)) {
+            throw new RuntimeException("Admin already exists");
+        }
+
+        User admin = new User(
+                request.getName(),
+                request.getEmail(),
+                passwordEncoder.encode(request.getPassword()),
+                Role.ADMIN
+        );
+
+        userRepository.save(admin);
     }
 
     public LoginResponse login(LoginRequest request) {

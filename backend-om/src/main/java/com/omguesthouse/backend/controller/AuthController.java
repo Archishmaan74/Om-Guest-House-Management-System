@@ -25,6 +25,15 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/setup-admin")
+    public ResponseEntity<Void> setupAdmin(
+            @RequestBody RegisterRequest request,
+            @RequestHeader("X-Admin-Setup-Secret") String setupSecret
+    ) {
+        authService.setupAdmin(request, setupSecret);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(
             @RequestBody LoginRequest request
