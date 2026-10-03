@@ -2,10 +2,16 @@ package com.omguesthouse.backend.service;
 
 import com.omguesthouse.backend.dto.LoginRequest;
 import com.omguesthouse.backend.dto.LoginResponse;
+import com.omguesthouse.backend.dto.RegisterRequest;
+import com.omguesthouse.backend.entity.Role;
+import com.omguesthouse.backend.entity.User;
+import com.omguesthouse.backend.repository.UserRepository;
 import com.omguesthouse.backend.security.JwtService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,13 +19,61 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Value("${admin.setup-secret}")
+    private String adminSetupSecret;
 
     public AuthService(
             AuthenticationManager authenticationManager,
-            JwtService jwtService
+            JwtService jwtService,
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder
     ) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public void register(RegisterRequest request) {
+
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        User user = new User(
+                request.getName(),
+                request.getEmail(),
+                passwordEncoder.encode(request.getPassword()),
+                Role.GUEST
+        );
+
+        userRepository.save(user);
+    }
+
+    public void setupAdmin(
+            RegisterRequest request,
+            String setupSecret
+    ) {
+
+        if (!adminSetupSecret.equals(setupSecret)) {
+            throw new RuntimeException("Invalid setup secret");
+        }
+
+        if (userRepository.existsByRole(Role.ADMIN)) {
+            throw new RuntimeException("Admin already exists");
+        }
+
+        User admin = new User(
+                request.getName(),
+                request.getEmail(),
+                passwordEncoder.encode(request.getPassword()),
+                Role.ADMIN
+        );
+
+        userRepository.save(admin);
     }
 
     public LoginResponse login(LoginRequest request) {

@@ -5,3 +5,6 @@ spring:
 jwt:
   secret: ${JWT_SECRET}
   expiration: 3600000
+
+admin:
+  setup-secret: ${ADMIN_SETUP_SECRET}
