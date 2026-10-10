@@ -1,11 +1,14 @@
 import { Outlet } from "react-router";
 import PageContainer from "./components/Layout/PageContainer";
+import Navbar from "./components/Navbar/Navbar";
 import { StyledPublicLayout, Header, Main, Footer } from "./PublicLayoutStyles";
 
 const PublicLayout = () => {
   return (
     <StyledPublicLayout>
-      <Header>{/* Header will come here */}</Header>
+      <Header>
+        <Navbar />
+      </Header>
 
       <Main>
         <PageContainer>
