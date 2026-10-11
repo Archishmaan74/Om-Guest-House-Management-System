@@ -1,11 +1,15 @@
 import { Outlet } from "react-router";
 import PageContainer from "./components/Layout/PageContainer";
+import Navbar from "./components/Navbar/Navbar";
 import { StyledPublicLayout, Header, Main, Footer } from "./PublicLayoutStyles";
+import GuestHouseFooter from "./components/GuestHouseFooter/GuestHouseFooter";
 
 const PublicLayout = () => {
   return (
     <StyledPublicLayout>
-      <Header>{/* Header will come here */}</Header>
+      <Header>
+        <Navbar />
+      </Header>
 
       <Main>
         <PageContainer>
@@ -13,7 +17,9 @@ const PublicLayout = () => {
         </PageContainer>
       </Main>
 
-      <Footer>{/* Footer will come here */}</Footer>
+      <Footer>
+        <GuestHouseFooter />
+      </Footer>
     </StyledPublicLayout>
   );
 };
