@@ -11,13 +11,14 @@ import { ThemeProvider } from "@mui/material/styles";
 
 import AppLayout from "./AppLayout";
 import PublicLayout from "./PublicLayout";
+import Home from "./pages/Home/Home";
 import theme from "./theme/theme";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route element={<PublicLayout />}>
-        <Route path="/" element={<div>Home</div>} />
+        <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<div>Rooms</div>} />
         <Route path="/rooms/:id" element={<div>Room Details</div>} />
         <Route path="/about" element={<div>About Us</div>} />
