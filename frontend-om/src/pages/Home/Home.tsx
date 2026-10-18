@@ -2,7 +2,6 @@ import {
   Alert,
   Box,
   Button,
-  Card,
   CardContent,
   Divider,
   Grid,
@@ -13,7 +12,6 @@ import {
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import BedOutlinedIcon from "@mui/icons-material/BedOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
