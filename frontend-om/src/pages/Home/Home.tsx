@@ -18,7 +18,8 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import FamilyRestroomOutlinedIcon from "@mui/icons-material/FamilyRestroomOutlined";
 import PhoneInTalkOutlinedIcon from "@mui/icons-material/PhoneInTalkOutlined";
 import { Link as RouterLink } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getRoomCategories, type RoomCategory } from "../../api/roomCategoryApi";
 import {
   AboutGrid,
   AboutHighlights,
@@ -89,6 +90,38 @@ const Home = () => {
   const [guests, setGuests] = useState("2");
   const [roomType, setRoomType] = useState("");
   const [searchMessage, setSearchMessage] = useState("");
+  const [rooms, setRooms] = useState<RoomCategory[]>([]);
+  const [roomsLoading, setRoomsLoading] = useState(true);
+  const [roomsError, setRoomsError] = useState("");
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    getRoomCategories(controller.signal)
+      .then(setRooms)
+      .catch((error: unknown) => {
+        if (error instanceof Error && error.name === "AbortError") return;
+        setRoomsError(
+          error instanceof Error ? error.message : "Could not load room categories.",
+        );
+      })
+      .finally(() => setRoomsLoading(false));
+
+    return () => controller.abort();
+  }, []);
+
+  const featuredRooms = rooms
+    .filter((room) => !roomType || String(room.id) === roomType)
+    .slice(0, 3);
+
+  const formatPrice = (price: number | null) =>
+    price == null
+      ? "Price on request"
+      : new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+          maximumFractionDigits: 0,
+        }).format(price);
 
   const handleSearch = () => {
     if (!checkIn || !checkOut) {
@@ -169,8 +202,9 @@ const Home = () => {
           </TextField>
           <TextField select label="Room Type (Optional)" value={roomType} onChange={(event) => setRoomType(event.target.value)} fullWidth>
             <MenuItem value="">All Room Types</MenuItem>
-            <MenuItem value="standard">Standard</MenuItem>
-            <MenuItem value="deluxe">Deluxe</MenuItem>
+            {rooms.map((room) => (
+              <MenuItem key={room.id} value={String(room.id)}>{room.name}</MenuItem>
+            ))}
           </TextField>
           <StyledButton variant="contained" onClick={handleSearch} startIcon={<CalendarMonthOutlinedIcon />}>
             Search Rooms
@@ -187,14 +221,43 @@ const Home = () => {
           </Box>
           <Button component={RouterLink} to="/rooms" endIcon={<ArrowForwardRoundedIcon />}>View All Rooms</Button>
         </SectionTitleRow>
+        {roomsLoading && (
+          <Alert severity="info">Loading room categories…</Alert>
+        )}
+        {roomsError && <Alert severity="warning">{roomsError}</Alert>}
+        {!roomsLoading && !roomsError && rooms.length === 0 && (
+          <Alert severity="info">No room categories are available yet.</Alert>
+        )}
+        {!roomsLoading && !roomsError && rooms.length > 0 && featuredRooms.length === 0 && (
+          <Alert severity="info">No room category matches the selected filter.</Alert>
+        )}
         <Grid container spacing={2}>
-          {[1, 2, 3].map((item) => (
-            <Grid key={item} size={{ xs: 12, sm: 6, md: 4 }}>
+          {featuredRooms.map((room) => (
+            <Grid key={room.id} size={{ xs: 12, sm: 6, md: 4 }}>
               <RoomCardPlaceholder variant="outlined">
-                <RoomImagePlaceholder />
+                {room.imageUrl ? (
+                  <RoomImagePlaceholder component="img" src={room.imageUrl} alt={room.name} />
+                ) : (
+                  <RoomImagePlaceholder role="img" aria-label={`No photo available for ${room.name}`} />
+                )}
                 <CardContent>
-                  <Typography fontWeight={700}>Room details will appear here</Typography>
-                  <Typography color="text.secondary" variant="body2">Room category, photo URL and nightly price will be mapped from the API in the next task.</Typography>
+                  <Typography fontWeight={700}>{room.name}</Typography>
+                  {room.description && (
+                    <Typography color="text.secondary" variant="body2">{room.description}</Typography>
+                  )}
+                  {room.bathroomType && (
+                    <Typography color="text.secondary" variant="body2">{room.bathroomType}</Typography>
+                  )}
+                  <Typography fontWeight={800} color="primary.main">
+                    {formatPrice(room.pricePerNight)}
+                    {room.pricePerNight != null && <Typography component="span" variant="body2" color="text.secondary"> / night</Typography>}
+                  </Typography>
+                  <Typography color="text.secondary" variant="body2">
+                    {room.maxOccupancy ? `Up to ${room.maxOccupancy} guests` : "Guest capacity not specified"}
+                  </Typography>
+                  <Button component={RouterLink} to={`/rooms/${room.id}`} endIcon={<ArrowForwardRoundedIcon />}>
+                    View Details
+                  </Button>
                 </CardContent>
               </RoomCardPlaceholder>
             </Grid>
