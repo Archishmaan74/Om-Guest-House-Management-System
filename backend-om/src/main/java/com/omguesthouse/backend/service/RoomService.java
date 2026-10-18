@@ -5,6 +5,7 @@ import com.omguesthouse.backend.repository.RoomCategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoomService {
@@ -17,5 +18,9 @@ public class RoomService {
 
     public List<RoomCategory> getAllRoomCategories() {
         return roomCategoryRepository.findAll();
+    }
+
+    public Optional<RoomCategory> getRoomCategoryById(Long id) {
+        return roomCategoryRepository.findById(id);
     }
 }
