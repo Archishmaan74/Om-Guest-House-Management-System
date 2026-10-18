@@ -132,6 +132,8 @@ export const RoomCardPlaceholder = styled(Card)(({ theme }) => ({
 
 export const RoomImagePlaceholder = styled(Box)(({ theme }) => ({
   height: 150,
+  width: "100%",
+  objectFit: "cover",
   background: "linear-gradient(135deg, #e9ded1, #f8f4ef)",
   [theme.breakpoints.up("md")]: { height: 135 },
 }));
