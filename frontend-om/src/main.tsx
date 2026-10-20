@@ -13,6 +13,8 @@ import Home from "./pages/Home/Home";
 import AppLayout from "./AppLayout";
 import PublicLayout from "./PublicLayout";
 import theme from "./theme/theme";
+import { Provider } from "react-redux";
+import store from "./app/store";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,8 +41,10 @@ const router = createBrowserRouter(
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </Provider>
     </ThemeProvider>
   </StrictMode>,
 );
