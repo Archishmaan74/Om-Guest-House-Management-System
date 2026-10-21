@@ -7,17 +7,15 @@ import LocationBannerStyles from "./LocationBannerStyles";
 const LocationBanner = () => {
   return (
     <LocationBannerStyles>
-      <section className="location-banner">
+      <Box component="section" className="location-banner">
         <Box className="location-icon">
           <PlaceOutlinedIcon />
         </Box>
 
         <Box className="location-content">
-          <Typography component="h2" className="location-title">
-            Find Us in Varanasi
-          </Typography>
+          <Typography variant="h6">Find Us in Varanasi</Typography>
 
-          <Typography component="p" className="location-description">
+          <Typography variant="body2" className="location-description">
             Contact us for directions and information about reaching OM Guest
             House.
           </Typography>
@@ -28,11 +26,10 @@ const LocationBanner = () => {
           to="/contact"
           variant="contained"
           endIcon={<DirectionsOutlinedIcon />}
-          className="location-button"
         >
           Get Directions
         </Button>
-      </section>
+      </Box>
     </LocationBannerStyles>
   );
 };

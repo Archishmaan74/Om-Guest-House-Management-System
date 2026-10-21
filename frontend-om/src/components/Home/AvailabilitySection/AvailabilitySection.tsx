@@ -1,95 +1,60 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, MenuItem, TextField, Typography } from "@mui/material";
 import { Link } from "react-router";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import AvailabilitySectionStyles from "./AvailabilitySectionStyles";
 
 const AvailabilitySection = () => {
   return (
     <AvailabilitySectionStyles>
-      <section className="availability-section">
+      <Box component="section" className="availability-section">
         <Box className="availability-heading">
-          <Typography component="h2" className="availability-title">
-            Check Room Availability
-          </Typography>
+          <Typography variant="h6">Check Room Availability</Typography>
 
-          <Typography component="p" className="availability-description">
+          <Typography variant="body2" className="availability-description">
             Select your dates and find the best room for your stay
           </Typography>
         </Box>
 
-        <Box className="availability-panel">
-          <Box className="availability-field">
-            <Typography component="label" htmlFor="check-in">
-              Check-in Date
-            </Typography>
-            <Box
-              component="input"
-              id="check-in"
-              name="checkIn"
-              type="date"
-              className="availability-input"
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Box className="availability-panel">
+            <DatePicker
+              label="Check-in Date"
+              slotProps={{ textField: { name: "checkIn" } }}
             />
-          </Box>
 
-          <Box className="availability-field">
-            <Typography component="label" htmlFor="check-out">
-              Check-out Date
-            </Typography>
-            <Box
-              component="input"
-              id="check-out"
-              name="checkOut"
-              type="date"
-              className="availability-input"
+            <DatePicker
+              label="Check-out Date"
+              slotProps={{ textField: { name: "checkOut" } }}
             />
-          </Box>
 
-          <Box className="availability-field">
-            <Typography component="label" htmlFor="guest-count">
-              Guests
-            </Typography>
-            <Box
-              component="select"
-              id="guest-count"
-              name="guests"
-              defaultValue="2"
-              className="availability-input"
-            >
-              <option value="1">1 Guest</option>
-              <option value="2">2 Guests</option>
-              <option value="3">3 Guests</option>
-              <option value="4">4 Guests</option>
-              <option value="5">5+ Guests</option>
-            </Box>
-          </Box>
+            <TextField label="Guests" name="guests" select defaultValue="2">
+              <MenuItem value="1">1 Guest</MenuItem>
+              <MenuItem value="2">2 Guests</MenuItem>
+              <MenuItem value="3">3 Guests</MenuItem>
+              <MenuItem value="4">4 Guests</MenuItem>
+              <MenuItem value="5">5+ Guests</MenuItem>
+            </TextField>
 
-          <Box className="availability-field">
-            <Typography component="label" htmlFor="room-type">
-              Room Type (Optional)
-            </Typography>
-            <Box
-              component="select"
-              id="room-type"
+            <TextField
+              label="Room Type (Optional)"
               name="roomType"
+              select
               defaultValue="all"
-              className="availability-input"
             >
-              <option value="all">All Room Types</option>
-              <option value="standard">Standard</option>
-              <option value="ac">AC Room</option>
-              <option value="deluxe">Deluxe</option>
-            </Box>
-          </Box>
+              <MenuItem value="all">All Room Types</MenuItem>
+              <MenuItem value="standard">Standard</MenuItem>
+              <MenuItem value="ac">AC Room</MenuItem>
+              <MenuItem value="deluxe">Deluxe</MenuItem>
+            </TextField>
 
-          <Button
-            component={Link}
-            to="/rooms"
-            variant="contained"
-            className="availability-button"
-          >
-            Search Rooms
-          </Button>
-        </Box>
-      </section>
+            <Button component={Link} to="/rooms" variant="contained">
+              Search Rooms
+            </Button>
+          </Box>
+        </LocalizationProvider>
+      </Box>
     </AvailabilitySectionStyles>
   );
 };

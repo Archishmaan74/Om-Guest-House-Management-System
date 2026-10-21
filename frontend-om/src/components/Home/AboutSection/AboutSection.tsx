@@ -10,26 +10,26 @@ import AboutSectionStyles from "./AboutSectionStyles";
 const AboutSection = () => {
   return (
     <AboutSectionStyles>
-      <section className="about-section">
+      <Box component="section" className="about-section">
         <Box className="about-image-placeholder">
-          <ApartmentOutlinedIcon />
+          <ApartmentOutlinedIcon fontSize="large" />
 
-          <Typography component="p">OM GUEST HOUSE</Typography>
+          <Typography variant="subtitle2">OM GUEST HOUSE</Typography>
 
-          <Typography component="span">Property image placeholder</Typography>
+          <Typography variant="body2">Property image placeholder</Typography>
         </Box>
 
         <Box className="about-content">
-          <Typography component="p" className="about-eyebrow">
+          <Typography variant="overline" className="about-eyebrow">
             ABOUT OM GUEST HOUSE
           </Typography>
 
-          <Typography component="h2" className="about-title">
+          <Typography variant="h5" className="about-title">
             A Comfortable Stay.
             <br />A Welcoming Experience.
           </Typography>
 
-          <Typography component="p" className="about-description">
+          <Typography variant="body2" className="about-description">
             OM Guest House offers a welcoming place to stay, with room options
             designed for different guest needs. Explore our rooms and contact us
             if you need help choosing the right option for your visit.
@@ -39,7 +39,7 @@ const AboutSection = () => {
             component={Link}
             to="/about"
             endIcon={<ArrowForwardOutlinedIcon />}
-            className="about-button"
+            variant="contained"
           >
             Learn More
           </Button>
@@ -50,8 +50,8 @@ const AboutSection = () => {
             <ApartmentOutlinedIcon />
 
             <Box>
-              <Typography component="h3">Room Options</Typography>
-              <Typography component="p">
+              <Typography variant="subtitle2">Room Options</Typography>
+              <Typography variant="body2">
                 Explore available categories
               </Typography>
             </Box>
@@ -61,8 +61,8 @@ const AboutSection = () => {
             <CheckCircleOutlineOutlinedIcon />
 
             <Box>
-              <Typography component="h3">Comfortable Stay</Typography>
-              <Typography component="p">
+              <Typography variant="subtitle2">Comfortable Stay</Typography>
+              <Typography variant="body2">
                 Find a room suited to your needs
               </Typography>
             </Box>
@@ -72,8 +72,8 @@ const AboutSection = () => {
             <LocationOnOutlinedIcon />
 
             <Box>
-              <Typography component="h3">Location</Typography>
-              <Typography component="p">Contact us for directions</Typography>
+              <Typography variant="subtitle2">Location</Typography>
+              <Typography variant="body2">Contact us for directions</Typography>
             </Box>
           </Box>
 
@@ -81,12 +81,12 @@ const AboutSection = () => {
             <GroupsOutlinedIcon />
 
             <Box>
-              <Typography component="h3">Guest Support</Typography>
-              <Typography component="p">We are here to help</Typography>
+              <Typography variant="subtitle2">Guest Support</Typography>
+              <Typography variant="body2">We are here to help</Typography>
             </Box>
           </Box>
         </Box>
-      </section>
+      </Box>
     </AboutSectionStyles>
   );
 };

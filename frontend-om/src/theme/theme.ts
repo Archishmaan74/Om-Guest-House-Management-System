@@ -6,6 +6,8 @@ export const gradients = {
   warm: "linear-gradient(135deg, #FAF8F5 0%, #F5E7DE 50%, #D4A373 100%)",
   overlay:
     "linear-gradient(90deg, #FAF6F0 0%, rgba(250,246,240,0.9) 50%, rgba(250,246,240,0) 100%)",
+  heroOverlay:
+    "linear-gradient(90deg, #FAF8F5 0%, rgba(250,248,245,0.8) 40%, transparent 100%)",
 };
 
 const theme = createTheme({
@@ -25,8 +27,6 @@ const theme = createTheme({
       secondary: "#6B665F",
     },
   },
-
-
 
   typography: {
     fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
