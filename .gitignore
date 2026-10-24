@@ -1,0 +1,6 @@
+.env
+backend-om/target/
+frontend-om/node_modules/
+frontend-om/dist/
+.idea/
+.vscode/
