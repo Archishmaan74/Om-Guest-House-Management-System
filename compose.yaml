@@ -1,0 +1,27 @@
+
+services:
+  backend:
+    build:
+      context: ./backend-om
+      dockerfile: Dockerfile
+    container_name: om-guest-house-backend
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_SETUP_SECRET: ${ADMIN_SETUP_SECRET}
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend-om
+      dockerfile: Dockerfile
+    container_name: om-guest-house-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
