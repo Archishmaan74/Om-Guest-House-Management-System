@@ -4,18 +4,13 @@ const LocationBannerStyles = styled("div")(({ theme }) => ({
   "& .location-banner": {
     display: "flex",
     alignItems: "center",
-    gap: "1rem",
+    gap: theme.spacing(2),
     width: "100%",
     boxSizing: "border-box",
-    padding: "1.4rem",
+    padding: theme.spacing(3),
     border: `1px solid ${theme.palette.divider}`,
-    borderRadius: "0.8rem",
+    borderRadius: theme.shape.borderRadius,
     backgroundColor: theme.palette.secondary.light,
-
-    [theme.breakpoints.down("sm")]: {
-      alignItems: "flex-start",
-      flexDirection: "column",
-    },
   },
 
   "& .location-icon": {
@@ -25,7 +20,7 @@ const LocationBannerStyles = styled("div")(({ theme }) => ({
     flexShrink: 0,
     width: "3rem",
     height: "3rem",
-    borderRadius: "0.6rem",
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
 
@@ -37,38 +32,23 @@ const LocationBannerStyles = styled("div")(({ theme }) => ({
   "& .location-content": {
     flex: 1,
     minWidth: 0,
-  },
 
-  "& .location-title": {
-    color: theme.palette.text.primary,
-    fontSize: "1.0rem",
-    fontWeight: 700,
-  },
-
-  "& .location-description": {
-    color: theme.palette.text.secondary,
-    fontSize: "0.8rem",
-    lineHeight: 1.6,
-  },
-
-  "& .location-button": {
-    flexShrink: 0,
-    padding: "0.7rem 1rem",
-    borderRadius: "0.5rem",
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.primary.main,
-    boxShadow: "none",
-    fontSize: "0.8rem",
-    fontWeight: 600,
-    textTransform: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.primary.dark,
-      boxShadow: "none",
+    "& .MuiTypography-root": {
+      color: theme.palette.text.primary,
     },
 
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
+    "& .location-description": {
+      color: theme.palette.text.secondary,
+    },
+  },
+
+  "& .MuiButton-root": {
+    flexShrink: 0,
+    padding: theme.spacing(1.5, 2),
+    boxShadow: "none",
+
+    "&:hover": {
+      boxShadow: "none",
     },
   },
 }));

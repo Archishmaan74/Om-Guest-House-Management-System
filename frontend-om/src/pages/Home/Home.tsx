@@ -15,6 +15,8 @@ const Home = () => {
       <main>
         <HeroSection />
 
+        <Spacer height={2} heightMd={2} />
+
         <AvailabilitySection />
 
         <Spacer height={3} heightMd={3} />
