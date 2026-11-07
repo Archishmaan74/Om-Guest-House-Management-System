@@ -6,19 +6,36 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import AboutSectionStyles from "./AboutSectionStyles";
+import { useGetHomePageContentQuery } from "../../../app/services/homeApi";
 
 const AboutSection = () => {
+  const { data: homeData } = useGetHomePageContentQuery();
+
   return (
     <AboutSectionStyles>
       <Box component="section" className="about-section">
         <Box className="about-image-placeholder">
-          <ApartmentOutlinedIcon fontSize="large" />
-
-          <Typography variant="subtitle2">OM GUEST HOUSE</Typography>
-
-          <Typography variant="body2">Property image placeholder</Typography>
+          {homeData?.aboutImageUrl ? (
+            <Box
+              component="img"
+              src={homeData.aboutImageUrl}
+              alt="OM Guest House"
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <>
+              <ApartmentOutlinedIcon fontSize="large" />
+              <Typography variant="subtitle2">OM GUEST HOUSE</Typography>
+              <Typography variant="body2">
+                Property image placeholder
+              </Typography>
+            </>
+          )}
         </Box>
-
         <Box className="about-content">
           <Typography variant="overline" className="about-eyebrow">
             ABOUT OM GUEST HOUSE

@@ -3,8 +3,11 @@ import { Link } from "react-router";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import NearbyAttractionsStyles from "./NearbyAttractionsStyles";
+import { useGetHomePageContentQuery } from "../../../app/services/homeApi";
 
 const NearbyAttractions = () => {
+  const { data: homeData } = useGetHomePageContentQuery();
+
   return (
     <NearbyAttractionsStyles>
       <Box component="section" className="attractions-section">
@@ -28,10 +31,26 @@ const NearbyAttractions = () => {
         </Box>
 
         <Box className="attractions-grid">
+          {/* Assi Ghat */}
           <Card variant="outlined" className="attraction-card">
             <Box className="attraction-image-placeholder">
-              <ExploreOutlinedIcon />
-              <Typography variant="caption">Attraction image</Typography>
+              {homeData?.assiGhatImageUrl ? (
+                <Box
+                  component="img"
+                  src={homeData.assiGhatImageUrl}
+                  alt="Assi Ghat"
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <>
+                  <ExploreOutlinedIcon />
+                  <Typography variant="caption">Attraction image</Typography>
+                </>
+              )}
             </Box>
 
             <CardContent>
@@ -42,10 +61,26 @@ const NearbyAttractions = () => {
             </CardContent>
           </Card>
 
+          {/* Ganga Ghats */}
           <Card variant="outlined" className="attraction-card">
             <Box className="attraction-image-placeholder">
-              <ExploreOutlinedIcon />
-              <Typography variant="caption">Attraction image</Typography>
+              {homeData?.gangaGhatsImageUrl ? (
+                <Box
+                  component="img"
+                  src={homeData.gangaGhatsImageUrl}
+                  alt="Ganga Ghats"
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <>
+                  <ExploreOutlinedIcon />
+                  <Typography variant="caption">Attraction image</Typography>
+                </>
+              )}
             </Box>
 
             <CardContent>
@@ -56,10 +91,26 @@ const NearbyAttractions = () => {
             </CardContent>
           </Card>
 
+          {/* Local Temples */}
           <Card variant="outlined" className="attraction-card">
             <Box className="attraction-image-placeholder">
-              <ExploreOutlinedIcon />
-              <Typography variant="caption">Attraction image</Typography>
+              {homeData?.templeImageUrl ? (
+                <Box
+                  component="img"
+                  src={homeData.templeImageUrl}
+                  alt="Local Temples"
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <>
+                  <ExploreOutlinedIcon />
+                  <Typography variant="caption">Attraction image</Typography>
+                </>
+              )}
             </Box>
 
             <CardContent>
@@ -70,10 +121,26 @@ const NearbyAttractions = () => {
             </CardContent>
           </Card>
 
+          {/* Explore Varanasi */}
           <Card variant="outlined" className="attraction-card">
             <Box className="attraction-image-placeholder">
-              <ExploreOutlinedIcon />
-              <Typography variant="caption">Attraction image</Typography>
+              {homeData?.varanasiImageUrl ? (
+                <Box
+                  component="img"
+                  src={homeData.varanasiImageUrl}
+                  alt="Explore Varanasi"
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <>
+                  <ExploreOutlinedIcon />
+                  <Typography variant="caption">Attraction image</Typography>
+                </>
+              )}
             </Box>
 
             <CardContent>

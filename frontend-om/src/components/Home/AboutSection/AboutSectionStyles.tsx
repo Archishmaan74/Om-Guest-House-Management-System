@@ -16,11 +16,19 @@ const AboutSectionStyles = styled("div")(({ theme }) => ({
     justifyContent: "center",
     minWidth: 0,
     minHeight: "12rem",
-    padding: theme.spacing(2),
+    padding: 0,
     borderRadius: theme.shape.borderRadius,
+    overflow: "hidden",
     color: theme.palette.primary.main,
     textAlign: "center",
     backgroundColor: theme.palette.secondary.light,
+
+    "& img": {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      display: "block",
+    },
 
     "& .MuiSvgIcon-root": {
       marginBottom: theme.spacing(1),

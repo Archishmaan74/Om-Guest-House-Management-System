@@ -42,21 +42,16 @@ const NearbyAttractionsStyles = styled("div")(({ theme }) => ({
   },
 
   "& .attraction-image-placeholder": {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: theme.spacing(1),
-    minHeight: "7rem",
-    color: theme.palette.primary.main,
-    backgroundColor: theme.palette.secondary.light,
+    height: "16rem",
+    width: "100%",
+    overflow: "hidden",
+    padding: 0,
 
-    "& .MuiSvgIcon-root": {
-      fontSize: "2rem",
-    },
-
-    "& .MuiTypography-root": {
-      color: theme.palette.text.secondary,
+    "& img": {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      display: "block",
     },
   },
 

@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/auth/**",
                                 "/health",
+                                "/api/home",
                                 "/rooms/**"
                         ).permitAll()
 

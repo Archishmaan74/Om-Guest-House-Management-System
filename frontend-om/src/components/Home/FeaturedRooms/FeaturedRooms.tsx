@@ -4,8 +4,12 @@ import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import KingBedOutlinedIcon from "@mui/icons-material/KingBedOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import FeaturedRoomsStyles from "./FeaturedRoomsStyles";
+import { useGetRoomCategoriesQuery } from "../../../app/services/roomsApis";
 
 const FeaturedRooms = () => {
+  const { data: rooms, isLoading, isError } = useGetRoomCategoriesQuery();
+
+  console.log(rooms);
   return (
     <FeaturedRoomsStyles>
       <Box component="section" className="rooms-section">
@@ -14,8 +18,8 @@ const FeaturedRooms = () => {
             <Typography variant="h4">Our Rooms</Typography>
 
             <Typography variant="body1" className="section-description">
-              Choose from 6 room types designed for a comfortable and relaxing
-              stay.
+              Choose from our available room types designed for a comfortable
+              and relaxing stay.
             </Typography>
           </Box>
 
@@ -29,148 +33,89 @@ const FeaturedRooms = () => {
           </Button>
         </Box>
 
-        <Box className="rooms-grid">
-          <Box className="room-card">
-            <Box className="room-image-placeholder">
-              <KingBedOutlinedIcon />
-              <Typography variant="body2">Room image</Typography>
-            </Box>
+        {isLoading && <Typography role="status">Loading rooms...</Typography>}
 
-            <Box className="room-card-content">
-              <Typography variant="h6" className="room-name">
-                Standard Double Bedroom
-              </Typography>
+        {isError && (
+          <Typography color="error" role="alert">
+            Unable to load rooms. Please try again later.
+          </Typography>
+        )}
 
-              <Typography variant="body2" className="room-bathroom">
-                (Attached Bathroom)
-              </Typography>
-
-              <Box className="room-details">
-                <Box className="room-detail">
-                  <PersonOutlineOutlinedIcon />
-                  <Typography variant="body2">2 Guests</Typography>
+        {!isLoading && !isError && rooms && rooms.length > 0 && (
+          <Box className="rooms-grid">
+            {rooms.map((room) => (
+              <Box className="room-card" key={room.id}>
+                <Box className="room-image-placeholder">
+                  {room.imageUrl ? (
+                    <Box
+                      component="img"
+                      src={room.imageUrl}
+                      alt={room.name}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  ) : (
+                    <>
+                      <KingBedOutlinedIcon />
+                      <Typography variant="body2">Room image</Typography>
+                    </>
+                  )}
                 </Box>
 
-                <Box className="room-detail">
-                  <KingBedOutlinedIcon />
-                  <Typography variant="body2">1 Double Bed</Typography>
-                </Box>
-              </Box>
-
-              <Box className="room-card-footer">
-                <Typography variant="h6" className="room-price">
-                  ₹1,000{" "}
-                  <Typography component="span" variant="body2">
-                    / night
+                <Box className="room-card-content">
+                  <Typography variant="h6" className="room-name">
+                    {room.name}
                   </Typography>
-                </Typography>
 
-                <Button
-                  component={Link}
-                  to="/rooms"
-                  endIcon={<ArrowForwardOutlinedIcon />}
-                  variant="contained"
-                >
-                  View Details
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-
-          <Box className="room-card">
-            <Box className="room-image-placeholder">
-              <KingBedOutlinedIcon />
-              <Typography variant="body2">Room image</Typography>
-            </Box>
-
-            <Box className="room-card-content">
-              <Typography variant="h6" className="room-name">
-                Standard Double Bed AC Room
-              </Typography>
-
-              <Typography variant="body2" className="room-bathroom">
-                (Attached Washroom)
-              </Typography>
-
-              <Box className="room-details">
-                <Box className="room-detail">
-                  <PersonOutlineOutlinedIcon />
-                  <Typography variant="body2">2 Guests</Typography>
-                </Box>
-
-                <Box className="room-detail">
-                  <KingBedOutlinedIcon />
-                  <Typography variant="body2">1 Double Bed</Typography>
-                </Box>
-              </Box>
-
-              <Box className="room-card-footer">
-                <Typography variant="h6" className="room-price">
-                  ₹1,250{" "}
-                  <Typography component="span" variant="body2">
-                    / night
+                  <Typography variant="body2" className="room-bathroom">
+                    {room.bathroomType}
                   </Typography>
-                </Typography>
 
-                <Button
-                  component={Link}
-                  to="/rooms"
-                  endIcon={<ArrowForwardOutlinedIcon />}
-                  variant="contained"
-                >
-                  View Details
-                </Button>
-              </Box>
-            </Box>
-          </Box>
+                  <Box className="room-details">
+                    <Box className="room-detail">
+                      <PersonOutlineOutlinedIcon />
+                      <Typography variant="body2">
+                        {room.maxOccupancy} Guests
+                      </Typography>
+                    </Box>
 
-          <Box className="room-card">
-            <Box className="room-image-placeholder">
-              <KingBedOutlinedIcon />
-              <Typography variant="body2">Room image</Typography>
-            </Box>
+                    <Box className="room-detail">
+                      <KingBedOutlinedIcon />
+                      <Typography variant="body2">
+                        {room.totalRooms} Rooms
+                      </Typography>
+                    </Box>
+                  </Box>
 
-            <Box className="room-card-content">
-              <Typography variant="h6" className="room-name">
-                Deluxe Double Bed Spacious AC Room
-              </Typography>
+                  <Box className="room-card-footer">
+                    <Typography variant="h6" className="room-price">
+                      ₹{room.pricePerNight.toLocaleString("en-IN")}{" "}
+                      <Typography component="span" variant="body2">
+                        / night
+                      </Typography>
+                    </Typography>
 
-              <Typography variant="body2" className="room-bathroom">
-                (Attached Bathroom + Sofa)
-              </Typography>
-
-              <Box className="room-details">
-                <Box className="room-detail">
-                  <PersonOutlineOutlinedIcon />
-                  <Typography variant="body2">2 Guests</Typography>
-                </Box>
-
-                <Box className="room-detail">
-                  <KingBedOutlinedIcon />
-                  <Typography variant="body2">1 Double Bed</Typography>
+                    <Button
+                      component={Link}
+                      to="/rooms"
+                      endIcon={<ArrowForwardOutlinedIcon />}
+                      variant="contained"
+                    >
+                      View Details
+                    </Button>
+                  </Box>
                 </Box>
               </Box>
-
-              <Box className="room-card-footer">
-                <Typography variant="h6" className="room-price">
-                  ₹1,750{" "}
-                  <Typography component="span" variant="body2">
-                    / night
-                  </Typography>
-                </Typography>
-
-                <Button
-                  component={Link}
-                  to="/rooms"
-                  endIcon={<ArrowForwardOutlinedIcon />}
-                  variant="contained"
-                >
-                  View Details
-                </Button>
-              </Box>
-            </Box>
+            ))}
           </Box>
-        </Box>
+        )}
+
+        {!isLoading && !isError && rooms?.length === 0 && (
+          <Typography>No rooms are currently available.</Typography>
+        )}
       </Box>
     </FeaturedRoomsStyles>
   );

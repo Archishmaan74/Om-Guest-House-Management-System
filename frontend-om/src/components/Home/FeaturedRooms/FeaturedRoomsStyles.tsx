@@ -43,8 +43,16 @@ const FeaturedRoomsStyles = styled("div")(({ theme }) => ({
     alignItems: "center",
     justifyContent: "center",
     gap: theme.spacing(1),
-    minHeight: "7.5rem",
+    height: "14rem",
+    overflow: "hidden",
     backgroundColor: theme.palette.secondary.light,
+
+    "& img": {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      display: "block",
+    },
 
     "& .MuiSvgIcon-root": {
       fontSize: "2rem",

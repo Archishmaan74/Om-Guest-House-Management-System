@@ -24,11 +24,23 @@ const HeroSectionStyles = styled("div")(({ theme }) => ({
     left: "35%",
     background: gradients.hero,
 
+    "& .hero-image": {
+      position: "absolute",
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      objectPosition: "center",
+      zIndex: 0,
+    },
+
     "&::before": {
       content: '""',
       position: "absolute",
       inset: 0,
+      zIndex: 1,
       background: gradients.heroOverlay,
+      pointerEvents: "none",
     },
   },
 
