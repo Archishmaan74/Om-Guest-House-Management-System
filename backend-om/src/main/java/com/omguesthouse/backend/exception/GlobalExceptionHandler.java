@@ -1,4 +1,3 @@
-
 package com.omguesthouse.backend.exception;
 
 import com.omguesthouse.backend.dto.ApiResponse;
