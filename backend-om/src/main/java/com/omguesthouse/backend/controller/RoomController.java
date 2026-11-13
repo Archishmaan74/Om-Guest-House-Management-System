@@ -1,14 +1,14 @@
-package com.omguesthouse.backend.controller;
 
+package com.omguesthouse.backend.controller;
 
 import com.omguesthouse.backend.dto.ApiResponse;
 import com.omguesthouse.backend.entity.RoomCategory;
+import com.omguesthouse.backend.exception.ResourceNotFoundException;
 import com.omguesthouse.backend.service.RoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/rooms")
@@ -30,18 +30,19 @@ public class RoomController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<ApiResponse<RoomCategory>> getRoomCategoryById(@PathVariable Long id) {
-        Optional<RoomCategory> category = roomService.getRoomCategoryById(id);
+    public ResponseEntity<ApiResponse<RoomCategory>> getRoomCategoryById(
+            @PathVariable Long id) {
 
-        if (category.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        RoomCategory category = roomService.getRoomCategoryById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Room category not found with id: " + id
+                ));
 
         return ResponseEntity.ok(
                 new ApiResponse<>(
                         true,
                         "Room category retrieved successfully",
-                        category.get()
+                        category
                 )
         );
     }
