@@ -1,4 +1,3 @@
-
 package com.omguesthouse.backend.exception;
 
 public class DuplicateResourceException extends RuntimeException {
