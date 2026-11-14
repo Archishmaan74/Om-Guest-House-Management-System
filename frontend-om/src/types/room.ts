@@ -7,5 +7,4 @@ export interface RoomCategory {
   airConditioned: boolean;
   bathroomType: string;
   pricePerNight: number;
-  imageUrl: string;
 }

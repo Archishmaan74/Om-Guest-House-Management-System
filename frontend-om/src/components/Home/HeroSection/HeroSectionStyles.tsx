@@ -1,7 +1,13 @@
 import { styled } from "@mui/material/styles";
 import { gradients } from "../../../theme/theme";
 
-const HeroSectionStyles = styled("div")(({ theme }) => ({
+interface HeroSectionStylesProps {
+  heroImage?: string;
+}
+
+const HeroSectionStyles = styled("div", {
+  shouldForwardProp: (prop) => prop !== "heroImage",
+})<HeroSectionStylesProps>(({ theme, heroImage }) => ({
   "& .home-hero": {
     position: "relative",
     isolation: "isolate",
@@ -22,7 +28,12 @@ const HeroSectionStyles = styled("div")(({ theme }) => ({
     zIndex: -1,
     inset: 0,
     left: "35%",
-    background: gradients.hero,
+    backgroundImage: heroImage
+      ? `url("${heroImage}"), ${gradients.hero}`
+      : gradients.hero,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
 
     "&::before": {
       content: '""',

@@ -8,12 +8,16 @@ import LocationBanner from "../../components/Home/LocationBanner/LocationBanner"
 
 import HomeStyles from "./HomeStyles";
 import Spacer from "../../styledUtils/Spacer";
+import { useGetMediaQuery } from "../../app/services/mediaApis";
+import { useGetRoomCategoriesQuery } from "../../app/services/roomsApis";
 
 const Home = () => {
+  const { data: media = [] } = useGetMediaQuery("ROOM");
+  const { data: rooms = [] } = useGetRoomCategoriesQuery();
   return (
     <HomeStyles>
       <main>
-        <HeroSection />
+        <HeroSection media={media} />
 
         <Spacer height={2} heightMd={2} />
 
@@ -21,7 +25,7 @@ const Home = () => {
 
         <Spacer height={3} heightMd={3} />
 
-        <FeaturedRooms />
+        <FeaturedRooms rooms={rooms} />
 
         <Spacer height={3} heightMd={3} />
 
