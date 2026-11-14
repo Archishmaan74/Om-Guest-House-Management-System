@@ -1,3 +1,4 @@
+
 package com.omguesthouse.backend.service;
 
 import com.cloudinary.Cloudinary;
@@ -55,6 +56,11 @@ public class MediaService {
             String resourceType,
             String resourceId
     ) {
+
+        if (resourceId == null || resourceId.isBlank()) {
+            return mediaRepository.findByResourceType(resourceType);
+        }
+
         return mediaRepository.findByResourceTypeAndResourceId(
                 resourceType,
                 resourceId
