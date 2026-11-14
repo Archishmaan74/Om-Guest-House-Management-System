@@ -2,10 +2,17 @@ import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import HeroSectionStyles from "./HeroSectionStyles";
+import type { Media } from "../../../types/media";
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  media: Media[];
+}
+
+const HeroSection = ({ media }: HeroSectionProps) => {
+  const heroImage = media[0]?.secureUrl;
+
   return (
-    <HeroSectionStyles>
+    <HeroSectionStyles heroImage={heroImage}>
       <Box component="section" className="home-hero">
         <Box className="hero-background" aria-hidden="true" />
 

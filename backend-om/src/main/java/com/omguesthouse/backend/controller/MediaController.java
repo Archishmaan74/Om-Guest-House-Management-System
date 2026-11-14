@@ -43,7 +43,7 @@ public class MediaController {
     @GetMapping
     public ApiResponse<List<Media>> getMedia(
             @RequestParam String resourceType,
-            @RequestParam String resourceId
+            @RequestParam(required = false) String resourceId
     ) {
 
         List<Media> media = mediaService.searchMedia(

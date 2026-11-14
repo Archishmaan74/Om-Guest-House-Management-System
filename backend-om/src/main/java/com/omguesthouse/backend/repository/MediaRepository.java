@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface MediaRepository extends JpaRepository<Media, Long> {
 
+    List<Media> findByResourceType(String resourceType);
+
     List<Media> findByResourceTypeAndResourceId(
             String resourceType,
             String resourceId
