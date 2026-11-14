@@ -1,4 +1,3 @@
-
 package com.omguesthouse.backend.service;
 
 import com.cloudinary.Cloudinary;
@@ -6,9 +5,9 @@ import com.omguesthouse.backend.entity.Media;
 import com.omguesthouse.backend.exception.ResourceNotFoundException;
 import com.omguesthouse.backend.repository.MediaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -27,13 +26,19 @@ public class MediaService {
     }
 
     public Media uploadMedia(
-            MultipartFile file,
+            String file,
             String resourceType,
             String resourceId
     ) throws IOException {
 
+        String base64Image = file.contains(",")
+                ? file.substring(file.indexOf(",") + 1)
+                : file;
+
+        byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+
         Map result = cloudinary.uploader().upload(
-                file.getBytes(),
+                imageBytes,
                 Map.of()
         );
 

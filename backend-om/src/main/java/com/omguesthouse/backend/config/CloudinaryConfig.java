@@ -1,4 +1,3 @@
-
 package com.omguesthouse.backend.config;
 
 import com.cloudinary.Cloudinary;

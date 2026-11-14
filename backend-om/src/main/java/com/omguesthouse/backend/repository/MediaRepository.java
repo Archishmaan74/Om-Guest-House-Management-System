@@ -1,4 +1,3 @@
-
 package com.omguesthouse.backend.repository;
 
 import com.omguesthouse.backend.entity.Media;
