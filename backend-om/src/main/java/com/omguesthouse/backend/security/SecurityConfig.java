@@ -53,6 +53,11 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers(
+                                HttpMethod.GET,
+                                "/media/**"
+                        ).permitAll()
+
+                        .requestMatchers(
                                 HttpMethod.DELETE,
                                 "/users/me"
                         ).authenticated()

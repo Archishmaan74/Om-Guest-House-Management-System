@@ -32,7 +32,5 @@ public class RoomCategory {
 
     private Integer pricePerNight;
 
-    private String imageUrl;
-
     public RoomCategory() {}
 }
