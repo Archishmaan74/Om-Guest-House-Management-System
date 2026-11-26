@@ -5,6 +5,7 @@ import BenefitsSection from "../../components/Home/BenefitsSection/BenefitsSecti
 import AboutSection from "../../components/Home/AboutSection/AboutSection";
 import NearbyAttractions from "../../components/Home/NearbyAttractions/NearbyAttractions";
 import LocationBanner from "../../components/Home/LocationBanner/LocationBanner";
+import Loader from "../../components/Loader/Loader";
 
 import HomeStyles from "./HomeStyles";
 import Spacer from "../../styledUtils/Spacer";
@@ -12,12 +13,15 @@ import { useGetMediaQuery } from "../../app/services/mediaApis";
 import { useGetRoomCategoriesQuery } from "../../app/services/roomsApis";
 
 const Home = () => {
-  const { data: media = [] } = useGetMediaQuery("ROOM");
-  const { data: rooms = [] } = useGetRoomCategoriesQuery();
+  const { data: media = [], isLoading: isMediaLoading } =
+    useGetMediaQuery("ROOM");
+
+  const { data: rooms = [], isLoading: isRoomsLoading } =
+    useGetRoomCategoriesQuery();
   return (
     <HomeStyles>
       <main>
-        <HeroSection media={media} />
+        {isMediaLoading ? <Loader /> : <HeroSection media={media} />}
 
         <Spacer height={2} heightMd={2} />
 
@@ -25,7 +29,7 @@ const Home = () => {
 
         <Spacer height={3} heightMd={3} />
 
-        <FeaturedRooms rooms={rooms} />
+        {isRoomsLoading ? <Loader /> : <FeaturedRooms rooms={rooms} />}
 
         <Spacer height={3} heightMd={3} />
 
